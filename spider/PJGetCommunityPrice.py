@@ -14,12 +14,7 @@ from selenium import webdriver
 
 
 class CommunityPriceSpider:
-    header = {
-         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
-    }
 
-    cookie = None
-    openner = None
     driver = None
 
     host = "http://hz.lianjia.com/"
