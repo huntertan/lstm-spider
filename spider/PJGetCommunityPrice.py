@@ -6,6 +6,8 @@ import cookielib
 import os
 import random
 import urllib2
+
+import sqlite3
 from bs4 import BeautifulSoup
 import time
 from selenium import webdriver
@@ -58,12 +60,8 @@ class CommunityPriceSpider:
             print "begin to grab charge info of xiaoqu:" + str(id)
             priceUrl = self.basicUrl + "c" + id + "/"
             print "access to url:" + priceUrl + " " + "xiaoquId:" + id
-            request = urllib2.Request(priceUrl, None, self.header)
-            # set a proxy
-            # proxyIdx = random.randint(0, 0)
-            # request.set_proxy(self.proxyHosts[proxyIdx],'http')
-            response = self.opener.open(request,None,10)
-            data = response.read()
+            self.driver.get(priceUrl)
+            data = self.driver.page_source
             soup = BeautifulSoup(data, "html.parser")
             # all charge amount
             totalCount = soup.find('div', attrs={'class': 'total fl'}).span.contents[0]
@@ -110,13 +108,9 @@ class CommunityPriceSpider:
         time.sleep(sleepSecond)
         print "sleep " + str(sleepSecond) + " second"
         print "access to url:" + url
-
-        request = urllib2.Request(url, None, self.header)
-        # set a proxy
-        # proxyIdx = random.randint(0, 0)
-        # request.set_proxy(self.proxyHosts[proxyIdx], 'http')
-        response = self.opener.open(request)
-        data = response.read()
+        # do the request
+        self.driver.get(url)
+        data = self.driver.page_source
         soup = BeautifulSoup(data, "html.parser")
         priceListContent = soup.find('ul', attrs={'class':'listContent'})
         priceList = priceListContent.findAll('li')
@@ -146,37 +140,6 @@ class CommunityPriceSpider:
             strLine = info[0].__str__() + " " + info[1] + " " + info[2] + " " + info[3] + " " + info[4] + '\n'
             fp.write(strLine)
         fp.close()
-
-
-    def build_opener_with_chrome_cookies(self,domain):
-        print os.environ;
-        cookie_file_path = os.environ['LOCALAPPDATA']+r"\Google\Chrome\User Data\Default\Cookies"
-        if not os.path.exists(cookie_file_path):
-            raise Exception('Cookies file not exist!')
-        conn = sqlite3.connect(cookie_file_path)
-        sql = 'select host_key, name, value, path from cookies'
-        if domain:
-            sql += ' where host_key like "%{}%"'.format(domain)
-
-        cookiejar = cookielib.CookieJar()  # No cookies stored yet
-
-        for row in conn.execute(sql):
-            cookie_item = cookielib.Cookie(
-                version=0, name=row[1], value=row[2],
-                port=None, port_specified=None,
-                domain=row[0], domain_specified=None, domain_initial_dot=None,
-                path=row[3], path_specified=None,
-                secure=None,
-                expires=None,
-                discard=None,
-                comment=None,
-                comment_url=None,
-                rest=None,
-                rfc2109=False,
-            )
-            cookiejar.set_cookie(cookie_item)  # Apply each cookie_item to cookiejar
-        conn.close()
-        return urllib2.build_opener(urllib2.HTTPCookieProcessor(cookiejar))
 
 priceSpider = CommunityPriceSpider()
 xiaoquIds = priceSpider.readCommunityIdFromFile()
