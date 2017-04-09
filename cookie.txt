@@ -1,0 +1,8 @@
+# Netscape HTTP Cookie File
+# http://curl.haxx.se/rfc/cookie_spec.html
+# This is a generated file!  Do not edit.
+
+.lianjia.com	TRUE	/	FALSE	1491723159	lianjia_ssid	f70d2e09-4314-450c-bc01-ab4e7038acc7
+.lianjia.com	TRUE	/	FALSE	1807081359	lianjia_uuid	b136475a-a100-4113-af86-13fbfed78bfb
+.lianjia.com	TRUE	/	FALSE	1491807759	select_city	330100
+hz.lianjia.com	FALSE	/	FALSE		all-lj	78917a1433741fe7067e3641b5c01569
