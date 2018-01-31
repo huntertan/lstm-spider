@@ -16,7 +16,8 @@ class PricePredictor:
     train_x, train_y = [],[] #训练数据集
     sortedChargeList = []  #排序的训练数据集
     normalizeData = []    #归一化的数据
-    dataFile = '/Users/hanqing.thq/github/lstm-spider/chargeInfo.txt'
+    # dataFile = '/Users/hanqing.thq/github/lstm-spider/chargeInfo.txt'
+    dataFile = '../chargeInfo.txt'
     date2Price = {}       #日期－每平米的价格映射
     chargeList = []       #交易价格
     date2Charge = {}      #日期－交易价格映射
@@ -142,15 +143,14 @@ class PricePredictor:
             plt.show()
 
 predictor = PricePredictor()
-# 模型训练
-# predictor.loadData()
+predictor.loadData()
 # sortedChargeList = sorted(predictor.chargeList, key=predictor.getKey, reverse=False)
-# predictor.buildTrainDataSet()
+# 构建训练数据
+predictor.buildTrainDataSet()
+# 模型训练
 # predictor.trainLstm()
 
 # 预测－预测前需要先完成模型训练
-predictor.loadData()
-predictor.buildTrainDataSet()
 predictor.prediction()
 
 
