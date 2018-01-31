@@ -16,7 +16,6 @@ class PricePredictor:
     train_x, train_y = [],[] #训练数据集
     sortedChargeList = []  #排序的训练数据集
     normalizeData = []    #归一化的数据
-    # dataFile = '/Users/hanqing.thq/github/lstm-spider/chargeInfo.txt'
     dataFile = '../chargeInfo.txt'
     date2Price = {}       #日期－每平米的价格映射
     chargeList = []       #交易价格
@@ -124,7 +123,7 @@ class PricePredictor:
         saver = tf.train.Saver(tf.global_variables())
         with tf.Session() as sess:
             # 参数恢复
-            module_file = tf.train.latest_checkpoint('/Users/hanqing.thq/github/lstm-spider/prediction/')
+            module_file = tf.train.latest_checkpoint('./')
             saver.restore(sess, module_file)
             # 取训练集最后一行为测试样本. shape=[1,time_step,inputSize]
             prev_seq = self.train_x[-1]
