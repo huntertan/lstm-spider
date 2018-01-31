@@ -143,7 +143,6 @@ class PricePredictor:
 
 predictor = PricePredictor()
 predictor.loadData()
-# sortedChargeList = sorted(predictor.chargeList, key=predictor.getKey, reverse=False)
 # 构建训练数据
 predictor.buildTrainDataSet()
 # 模型训练
